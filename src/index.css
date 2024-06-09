@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.fadeInText {
+  animation: fadeInText 1s ease;
+}
+
+.fadeInTextTwo {
+  animation: fadeInText 5s ease;
+}
+
+@keyframes fadeIn {
+  0% { opacity:  0;
+  filter: blur(20px);}
+
+  10% {
+    opacity: 1;
+    filter: brightness(2) blur(10px);
+  }
+}
+
+@keyframes fadeInText {
+  0% { opacity:  0;}
+  100% { opacity:  1;}
+}
+
+@keyframes fadeInTextTwo {
+  0% { opacity:  0;}
+  90% { opacity:  0;}
+  100% { opacity:  1;}
+}
