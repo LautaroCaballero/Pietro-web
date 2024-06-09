@@ -4,7 +4,7 @@ export const ProductDetail = ({ setModalState, current }) => {
   const { actions } = useCartProvider();
 
   return (
-    <div className="p-[1rem] h-[30rem] w-[25rem] md:w-[50rem] lg:w-[50rem]">
+    <div className="p-[1rem] h-[30rem] w-[21rem] md:w-[50rem] lg:w-[50rem]">
       <section className="flex">
         <p className="flex-1 text-3xl font-bold">{current.name}</p>
         <button onClick={() => setModalState(false)}>X</button>

@@ -8,7 +8,7 @@ export const Cart = () => {
   const [paymentMethod, setPaymentMethod] = useState("Transferencia");
   const [clientName, setClientName] = useState("");
   const [clientAddress, setClientAddress] = useState("");
-  const [clientDate, setClientDate] = useState("");
+  const [clientDate, setClientDate] = useState("Domingo");
 
   useEffect(() => {
     const mensaje = [
