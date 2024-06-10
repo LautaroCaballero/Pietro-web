@@ -11,9 +11,8 @@ export const Cart = () => {
   const [clientDate, setClientDate] = useState("Domingo");
 
   useEffect(() => {
-    const mensaje = [
+    const mensaje = [`Buenas! Te comunicaste con Pietro Pastas, a la brevedad serás atendido.`,
       ...state.cart_data.map((product) => `
-      Buenas! Te comunicaste con Pietro Pastas, a la brevedad serás atendido.
 
       Detalle del pedido:
       - ${product.name} - ${product.description} - ${product.price} c/u x ${product.count}`),
