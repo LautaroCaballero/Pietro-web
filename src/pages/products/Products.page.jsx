@@ -18,8 +18,8 @@ export const Products = () => {
   }, []);
 
   return (
-    <div className="p-8">
-      <div className="flex flex-wrap">
+    <div className="min-h-screen flex items-center justify-center p-8">
+      <div className="flex flex-wrap justify-center">
         {products.map((product) => (
           <div
             key={product.name}
@@ -27,20 +27,22 @@ export const Products = () => {
               setCurrentProduct(product);
               setViewModal(true);
             }}
-            className="cursor-pointer"
+            className="cursor-pointer m-2"
           >
             <Card data={product} />
           </div>
         ))}
       </div>
       {view_modal && <Dialog component={<ProductDetail setModalState={setViewModal} current={current_product} />} />}
-      {!view_modal && <Link to={"/cart"}> <div className="fixed bottom-4 right-4">
-  <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
-  <ShoppingCart />
-  </button>
-</div></Link>}
-
+      {!view_modal && (
+        <Link to={"/cart"}>
+          <div className="fixed bottom-4 right-4">
+            <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+              <ShoppingCart />
+            </button>
+          </div>
+        </Link>
+      )}
     </div>
-
   );
 };
