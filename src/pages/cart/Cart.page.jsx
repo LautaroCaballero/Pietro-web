@@ -60,10 +60,11 @@ export const Cart = () => {
   const isOrderInvalid = state.cart_data.length === 0 || !clientName || !clientAddress || selectedDay === "" || selectedPaymentMethod === "";
 
   return (
-    <div className="h-[calc(100vh-200px)] flex flex-col items-center justify-center font-semibold">
-      <div className="flex flex-col w-full max-w-md p-4 space-y-4 rounded-lg border shadow-md">
+    <div className="mt-5 flex flex-col items-center justify-center font-semibold ">
+      <div className="flex flex-col w-full max-w-md p-4 space-y-4 rounded-lg shadow-md ">
         <h1 className="text-2xl font-bold text-center">Pedido</h1>
-        <div className="space-y-2">
+        <div className="space-y-2 ">
+
           {state.cart_data.length === 0 ? (
             <div className="text-center text-red-500">El carrito está vacío</div>
           ) : (
@@ -87,6 +88,7 @@ export const Cart = () => {
                   </div>
                 </div>
               ))}
+
               <div className="my-1 w-full py-2 border-b border-gray-300">
                 <h2 className="px-2 font-bold">Total: ${state.cart_total_price}</h2>
               </div>
