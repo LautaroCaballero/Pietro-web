@@ -6,12 +6,12 @@ export const ProductDetail = ({ setModalState, current }) => {
   const { actions } = useCartProvider();
 
   return (
-    <div className="p-[1rem] h-fit w-[90vw] md:w-[50rem] ">
+    <div className="p-[1rem] h-fit w-[90vw] md:w-[50rem] m-0">
       <section className="flex">
         <p className="flex-1 text-3xl font-bold">{current.name}</p>
         <button onClick={() => setModalState(false)}>X</button>
       </section>
-      <section className="mt-[1rem] flex space-x-4  pb-3">
+      <section className="mt-[1rem] flex  pb-3">
         <div
           className="min-w-[50%] h-[24.5rem] bg-cover flex justify-center items-center bg-center rounded-lg shadow-md hidden md:block lg:block"
           style={{ backgroundImage: `url(https://i.imgur.com/${current.image}.jpg)` }}
