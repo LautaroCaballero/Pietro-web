@@ -1,37 +1,43 @@
-import { PhoneIcon } from "lucide-react";
+import { PhoneIcon, Trash2 } from "lucide-react";
 import { useCartProvider } from "../../context/Cart.context";
 import { useState, useEffect } from "react";
+import { SquarePlus, SquareMinus, BookImage } from "lucide-react";
+import { Link } from "react-router-dom";
+import Dropdown from "../../components/Dropdown/Dropdown";
 
 export const Cart = () => {
   const { state } = useCartProvider();
   const [message, setMessage] = useState("");
-  const [paymentMethod, setPaymentMethod] = useState("Transferencia");
+  // const [paymentMethod, setPaymentMethod] = useState("Transferencia");
   const [clientName, setClientName] = useState("");
   const [clientAddress, setClientAddress] = useState("");
-  const [clientDate, setClientDate] = useState("Domingo");
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("Transferencia");
+  const [selectedDay, setSelectedDay] = useState("");
 
   useEffect(() => {
     if (state.cart_data.length > 0 && clientName && clientAddress) {
       const mensaje = [
         `Buenas! Te comunicaste con Pietro Pastas, a la brevedad serás atendido.`,
-        ...state.cart_data.map((product) => `
-        Detalle del pedido:
-        - ${product.name} - ${product.description} - ${product.price} c/u x ${product.count}`),
+        `Detalle del pedido:`,
+        ...state.cart_data.map(
+          (product) => `
+        - ${product.name} - ${product.description} - ${product.price} c/u x ${product.count}`
+        ),
         "--------------------------------------------",
         `Total: $${state.cart_total_price}`,
         "--------------------------------------------",
         `Nombre: ${clientName}`,
         `Dirección: ${clientAddress}`,
-        `Forma de pago: ${paymentMethod}`,
-        `Día de entrega: ${clientDate}`,
+        `Forma de pago: ${selectedPaymentMethod}`,
+        `Día de entrega: ${selectedDay}`,
       ].join("\n");
       setMessage(encodeURIComponent(mensaje));
     }
-  }, [state.cart_data, state.cart_total_price, paymentMethod, clientName, clientAddress, clientDate]);
+  }, [state.cart_data, state.cart_total_price, selectedPaymentMethod, clientName, clientAddress, selectedDay]);
 
-  const handlePaymentChange = (event) => {
-    setPaymentMethod(event.target.value);
-  };
+  // const handlePaymentChange = (event) => {
+  //   setPaymentMethod(event.target.value);
+  // };
 
   const handleNameChange = (event) => {
     setClientName(event.target.value);
@@ -41,11 +47,17 @@ export const Cart = () => {
     setClientAddress(event.target.value);
   };
 
-  const handleDateChange = (event) => {
-    setClientDate(event.target.value);
+  const handlePaymentMethodChange = (method) => {
+    setSelectedPaymentMethod(method);
   };
 
-  const isOrderInvalid = state.cart_data.length === 0 || !clientName || !clientAddress;
+  const handleDayChange = (day) => {
+    setSelectedDay(day);
+  };
+
+  const { actions } = useCartProvider();
+
+  const isOrderInvalid = state.cart_data.length === 0 || !clientName || !clientAddress || selectedDay === "" || selectedPaymentMethod === "";
 
   return (
     <div className="h-[calc(100vh-200px)] flex flex-col items-center justify-center font-semibold">
@@ -57,21 +69,35 @@ export const Cart = () => {
           ) : (
             <>
               {state.cart_data.map((product) => (
-                <div key={product.id}>
-                  {product.name} - {product.description} - {product.price} c/u x {product.count}
+                <div key={product.id} className="my-1 w-full py-2 border-b border-gray-300 flex">
+                  <div className="w-full">
+                    <p className="px-2 font-bold">
+                      {product.name} - {product.description}
+                    </p>
+                    <p className="px-2 text-gray-800">${product.price} c/u</p>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <button className="text-red-700 font-bold" onClick={() => actions.removeProduct(product)}>
+                      <SquareMinus />
+                    </button>
+                    <span>{product.count}</span>
+                    <button className="text-green-700 font-bold" onClick={() => actions.addProduct(product)}>
+                      <SquarePlus />
+                    </button>
+                  </div>
                 </div>
               ))}
-              <div>
-                <h2>Total: ${state.cart_total_price}</h2>
+              <div className="my-1 w-full py-2 border-b border-gray-300">
+                <h2 className="px-2 font-bold">Total: ${state.cart_total_price}</h2>
               </div>
-              <div className="space-y-4">
+              <div className="space-y-3">
                 <input
                   type="text"
                   name="Name"
                   id="client_name"
                   placeholder="Nombre"
                   onChange={handleNameChange}
-                  className={`p-2 border rounded-md ${!clientName ? 'border-red-500' : ''}`}
+                  className={`p-2 border rounded-md ${!clientName ? "border-red-500" : ""}`}
                   required
                 />
                 <input
@@ -80,61 +106,16 @@ export const Cart = () => {
                   id="address"
                   placeholder="Dirección"
                   onChange={handleAddressChange}
-                  className={`p-2 border rounded-md ${!clientAddress ? 'border-red-500' : ''}`}
+                  className={`p-2 border rounded-md ${!clientAddress ? "border-red-500" : ""}`}
                   required
                 />
-                <div className="flex justify-between">
-                  <h2>Método de pago:</h2>
-                  <div>
-                    <input
-                      type="radio"
-                      name="paymentMethod"
-                      id="radioCash"
-                      value="Efectivo"
-                      onChange={handlePaymentChange}
-                      className="mr-1"
-                    />
-                    <label htmlFor="radioCash">Efectivo</label>
-                  </div>
-                  <div>
-                    <input
-                      type="radio"
-                      name="paymentMethod"
-                      id="radioTransfer"
-                      value="Transferencia"
-                      onChange={handlePaymentChange}
-                      className="mr-1"
-                      defaultChecked
-                    />
-                    <label htmlFor="radioTransfer">Transferencia</label>
-                  </div>
-                </div>
-                <div className="flex justify-between">
-                  <h2>Día de entrega:</h2>
-                  <div>
-                    <input
-                      type="radio"
-                      name="orderDate"
-                      id="radioSaturday"
-                      value="Sábado"
-                      onChange={handleDateChange}
-                      className="mr-1"
-                    />
-                    <label htmlFor="radioSaturday">Sábado</label>
-                  </div>
-                  <div>
-                    <input
-                      type="radio"
-                      name="orderDate"
-                      id="radioSunday"
-                      value="Domingo"
-                      onChange={handleDateChange}
-                      className="mr-1"
-                      defaultChecked
-                    />
-                    <label htmlFor="radioSunday">Domingo</label>
-                  </div>
-                </div>
+                <Dropdown
+                  text="Seleccione método de pago"
+                  options={["Efectivo", "Transferencia"]}
+                  selectedOption={selectedPaymentMethod}
+                  onOptionChange={handlePaymentMethodChange}
+                />
+                <Dropdown text="Seleccione un día" options={["Viernes", "Sábado", "Domingo"]} selectedOption={selectedDay} onOptionChange={handleDayChange} />
               </div>
             </>
           )}
@@ -146,12 +127,24 @@ export const Cart = () => {
               className="text-center"
             >
               <button
-                className={`flex items-center justify-center p-2 text-black rounded-md ${isOrderInvalid ? "cursor-not-allowed opacity-50" : "hover:text-green-500"}`}
+                className={`flex items-center justify-center p-2 text-black rounded-md ${
+                  isOrderInvalid ? "cursor-not-allowed opacity-50" : "hover:text-green-500"
+                }`}
                 disabled={isOrderInvalid}
               >
                 <PhoneIcon className="w-5 mr-2" /> Hacer pedido
               </button>
             </a>
+            {state.cart_data.length !== 0 ? (
+              <button className={`flex items-center justify-center p-2 text-black rounded-md`} onClick={() => actions.clearCart()}>
+                <Trash2 className="w-5 mr-2" /> Borrar carrito
+              </button>
+            ) : (
+              <Link to="/products"><button className={`flex items-center justify-center p-2 text-black rounded-md`} onClick={() => actions.clearCart()}>
+                <BookImage className="w-5 mr-2" /> Ir al catalogo
+              </button></Link>
+
+            )}
           </div>
         </div>
       </div>

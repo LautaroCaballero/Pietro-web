@@ -26,6 +26,12 @@ export const CartProvider = ({ children }) => {
     setCartData(cart_data.filter((item) => item.id !== product.id));
   };
 
+    // limpia el carrito
+  const clearCart = () => {
+    setCartData([])
+    setCartTotalPrice(0)
+  }
+
   // busca un producto en el carrito por id
   const getSpecificProduct = (id) => {
     return cart_data.find((item) => item.id === id);
@@ -40,6 +46,7 @@ export const CartProvider = ({ children }) => {
     addProduct,
     removeProduct,
     getSpecificProduct,
+    clearCart
   };
 
   useEffect(() => {
