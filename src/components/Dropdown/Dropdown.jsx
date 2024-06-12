@@ -9,6 +9,7 @@ const Dropdown = ({ text, options, selectedOption, onOptionChange }) => {
     <div className="flex justify-between">
       <div>
         <select
+
           value={selectedOption}
           onChange={handleSelectChange}
           className="p-2 border rounded-md"

@@ -11,7 +11,7 @@ export const Cart = () => {
   // const [paymentMethod, setPaymentMethod] = useState("Transferencia");
   const [clientName, setClientName] = useState("");
   const [clientAddress, setClientAddress] = useState("");
-  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("Transferencia");
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("");
   const [selectedDay, setSelectedDay] = useState("");
 
   useEffect(() => {
@@ -64,7 +64,6 @@ export const Cart = () => {
       <div className="flex flex-col w-full max-w-md p-4 space-y-4 rounded-lg shadow-md ">
         <h1 className="text-2xl font-bold text-center">Pedido</h1>
         <div className="space-y-2 ">
-
           {state.cart_data.length === 0 ? (
             <div className="text-center text-red-500">El carrito está vacío</div>
           ) : (
@@ -111,12 +110,13 @@ export const Cart = () => {
                   className={`p-2 border rounded-md ${!clientAddress ? "border-red-500" : ""}`}
                   required
                 />
-                <Dropdown
+                {/* <Dropdown
                   text="Seleccione método de pago"
                   options={["Efectivo", "Transferencia"]}
                   selectedOption={selectedPaymentMethod}
                   onOptionChange={handlePaymentMethodChange}
-                />
+                /> */}
+                <Dropdown text="Seleccione método de pago" options={["Efectivo", "Transferencia"]} selectedOption={selectedPaymentMethod} onOptionChange={handlePaymentMethodChange} />
                 <Dropdown text="Seleccione un día" options={["Viernes", "Sábado", "Domingo"]} selectedOption={selectedDay} onOptionChange={handleDayChange} />
               </div>
             </>
@@ -142,10 +142,11 @@ export const Cart = () => {
                 <Trash2 className="w-5 mr-2" /> Borrar carrito
               </button>
             ) : (
-              <Link to="/products"><button className={`flex items-center justify-center p-2 text-black rounded-md`} onClick={() => actions.clearCart()}>
-                <BookImage className="w-5 mr-2" /> Ir al catalogo
-              </button></Link>
-
+              <Link to="/products">
+                <button className={`flex items-center justify-center p-2 text-black rounded-md`} onClick={() => actions.clearCart()}>
+                  <BookImage className="w-5 mr-2" /> Ir al catalogo
+                </button>
+              </Link>
             )}
           </div>
         </div>
