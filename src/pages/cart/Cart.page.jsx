@@ -8,14 +8,13 @@ import Dropdown from "../../components/Dropdown/Dropdown";
 export const Cart = () => {
   const { state } = useCartProvider();
   const [message, setMessage] = useState("");
-  // const [paymentMethod, setPaymentMethod] = useState("Transferencia");
   const [clientName, setClientName] = useState("");
   const [clientAddress, setClientAddress] = useState("");
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("");
   const [selectedDay, setSelectedDay] = useState("");
 
   useEffect(() => {
-    if (state.cart_data.length > 0 && clientName && clientAddress) {
+    if (state.cart_data.length > 0 && clientName.trim && clientAddress.trim) {
       const mensaje = [
         `Buenas! Te comunicaste con Pietro Pastas, a la brevedad serás atendido.`,
         `Detalle del pedido:`,
@@ -35,9 +34,6 @@ export const Cart = () => {
     }
   }, [state.cart_data, state.cart_total_price, selectedPaymentMethod, clientName, clientAddress, selectedDay]);
 
-  // const handlePaymentChange = (event) => {
-  //   setPaymentMethod(event.target.value);
-  // };
 
   const handleNameChange = (event) => {
     setClientName(event.target.value);
@@ -77,11 +73,11 @@ export const Cart = () => {
                     <p className="px-2 text-gray-800">${product.price} c/u</p>
                   </div>
                   <div className="flex items-center space-x-2">
-                    <button className="text-red-700 font-bold" onClick={() => actions.removeProduct(product)}>
+                    <button className="text-gray-400 font-bold" onClick={() => actions.removeProduct(product)}>
                       <SquareMinus />
                     </button>
                     <span>{product.count}</span>
-                    <button className="text-green-700 font-bold" onClick={() => actions.addProduct(product)}>
+                    <button className="text-gray-400 font-bold" onClick={() => actions.addProduct(product)}>
                       <SquarePlus />
                     </button>
                   </div>
@@ -110,12 +106,6 @@ export const Cart = () => {
                   className={`p-2 border rounded-md ${!clientAddress ? "border-red-500" : ""}`}
                   required
                 />
-                {/* <Dropdown
-                  text="Seleccione método de pago"
-                  options={["Efectivo", "Transferencia"]}
-                  selectedOption={selectedPaymentMethod}
-                  onOptionChange={handlePaymentMethodChange}
-                /> */}
                 <Dropdown text="Seleccione método de pago" options={["Efectivo", "Transferencia"]} selectedOption={selectedPaymentMethod} onOptionChange={handlePaymentMethodChange} />
                 <Dropdown text="Seleccione un día" options={["Viernes", "Sábado", "Domingo"]} selectedOption={selectedDay} onOptionChange={handleDayChange} />
               </div>

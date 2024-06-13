@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useCartProvider } from "../../context/Cart.context";
 import { SquarePlus, SquareMinus } from "lucide-react";
+import { Button } from "../../components/Button/Button";
 
 export const ProductDetail = ({ setModalState, current }) => {
   const { actions } = useCartProvider();
@@ -26,13 +27,13 @@ export const ProductDetail = ({ setModalState, current }) => {
                 </div>
                 <div className="flex space-x-4 items-center ">
                   {/* Borra producto / resta count */}
-                  <button className="text-red-700 font-bold" onClick={() => actions.removeProduct(flavor)}>
+                  <button className="text-gray-400 font-bold" onClick={() => actions.removeProduct(flavor)}>
                     <SquareMinus />
                   </button>
                   {/* obtiene producto especifico y muestra su count actual */}
                   <span className="font-bold font">{actions.getSpecificProduct(flavor.id) ? actions.getSpecificProduct(flavor.id).count : 0}</span>
                   {/* Agrega producto / aumenta count */}
-                  <button className="text-green-700 font-bold" onClick={() => actions.addProduct(flavor)}>
+                  <button className="text-gray-400 font-bold" onClick={() => actions.addProduct(flavor)}>
                     <SquarePlus />
                   </button>
                 </div>
@@ -42,11 +43,15 @@ export const ProductDetail = ({ setModalState, current }) => {
         </div>
       </section>
       <div className="flex justify-center space-x-7 pt-4">
-        <button onClick={() => setModalState(false)} className="bg-green-700 rounded-md p-2 border-black shadow-lg hover:bg-green-400">
+      <button onClick={() => setModalState(false)}>
+        <Button text={'Continuar compra'} />
+      </button>
+
+        {/* <button  className="bg-green-700 rounded-md p-2 border-black shadow-lg hover:bg-green-400">
           Continuar compra
-        </button>
+        </button> */}
         <Link to={"/cart"}>
-          <button className="bg-blue-400 rounded-md p-2 border-black shadow-lg hover:bg-blue-600">Finalizar compra</button>
+          <Button text={'Finalizar compra'} onClick={() => setModalState(false)}/>
         </Link>
       </div>
     </div>
