@@ -17,7 +17,7 @@ export const ProductDetail = ({ setModalState, current }) => {
           className="min-w-[50%] h-[24.5rem] bg-cover flex justify-center items-center bg-center rounded-lg shadow-md hidden md:block lg:block"
           style={{ backgroundImage: `url(https://i.imgur.com/${current.image}.jpg)` }}
         ></div>
-        <div className="flex flex-col w-full">
+        <div className="flex flex-col ml-4 w-full">
           {current.products.map((flavor) => {
             return (
               <div key={flavor.description} className="my-1 w-full py-2 border-b border-gray-300 flex">
