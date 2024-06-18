@@ -4,8 +4,8 @@ import AboutUsPhoto from "../../assets/AboutUsPhoto.jpg";
 
 export const AboutUs = () => {
   return (
-    <div className="m-auto mt-10 max-w-[90%] md:max-w-[70%] p-6 rounded-lg border shadow-md flex flex-col md:flex-row md:space-x-6">
-      <img src={AboutUsPhoto} alt="" className="w-full md:w-[50%] h-auto" />
+    <div className="m-auto mt-10 max-w-[90%] md:max-w-[70%] p-6 rounded-lg border shadow-md flex flex-col xl:flex-row xl:space-x-6">
+      <img src={AboutUsPhoto} alt="" className="w-full md:w-[35rem] md:h-[35rem] h-auto" />
       <div className="text-black text-lg md:text-xl text-justify space-y-6 md:py-0">
         <p>
           Nosotros somos Javier y Nicolás, las mentes y manos detrás de Pietro Pastas. Nuestro nombre proviene de Pietro, el primer Caballero que llegó al país
